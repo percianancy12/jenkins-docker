@@ -7,46 +7,44 @@ pipeline {
     stages {
         stage('Clean workspace') {
             steps {
-                echo 'Cleaning Jenkins workspace...'
+                echo '🧹 Cleaning workspace...'
                 deleteDir()
             }
         }
 
         stage('Clone repo') {
             steps {
-                echo 'Cloning repository from GitHub...'
+                echo '📥 Cloning GitHub repo...'
                 git branch: 'main', url: 'https://github.com/percianancy12/jenkins-docker'
-                echo 'Repository cloned successfully.'
+                echo '🔍 Verifying app.py contents:'
+                sh 'cat app.py'
             }
         }
 
         stage('Build Docker image') {
             steps {
-                echo 'Building Docker image with no cache...'
+                echo '🐳 Building Docker image...'
                 script {
                     sh 'docker build --no-cache -t $IMAGE_NAME:latest .'
                 }
-                echo 'Docker image built successfully.'
             }
         }
 
         stage('Login to DockerHub') {
             steps {
-                echo 'Logging in to DockerHub...'
+                echo '🔐 Logging in to DockerHub...'
                 script {
                     sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                 }
-                echo 'Logged in to DockerHub successfully.'
             }
         }
 
         stage('Push image to DockerHub') {
             steps {
-                echo 'Pushing Docker image to DockerHub...'
+                echo '🚀 Pushing image to DockerHub...'
                 script {
                     sh 'docker push $IMAGE_NAME:latest'
                 }
-                echo 'Docker image pushed successfully.'
             }
         }
     }
