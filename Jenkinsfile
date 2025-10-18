@@ -6,13 +6,13 @@
 pipeline {
     agent any
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+        DOCKERHUB_CREDENTIALS = credentials('docker-hub-cred')
         IMAGE_NAME = "percianancy/jenkins_demo"
     }
     stages {
         stage('Clone repo') {
             steps {
-                git branch: 'main', url: 'https://github.com/divyashukla23/jenkins2'
+                git branch: 'main', url: 'https://github.com/percianancy12/jenkins-docker'
             }
         }
 
