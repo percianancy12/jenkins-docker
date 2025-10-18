@@ -21,6 +21,7 @@ pipeline {
                 script {
                     sh 'docker build -t $IMAGE_NAME:latest .'
                 }
+                 echo 'Docker image built successfully.'
             }
         }
 
